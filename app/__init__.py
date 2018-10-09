@@ -5,11 +5,13 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from flask_login import LoginManager
+from flask_pagedown import PageDown
 
 bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
+padedown = PageDown()
 
 #flask-login
 login_manager = LoginManager()
@@ -26,11 +28,12 @@ def create_app(config_name):
     mail.init_app(app)
     moment.init_app(app)
     db.init_app(app)
-    with app.app_context():
-        # Extensions like Flask-SQLAlchemy now know what the "current" app
-        # is while within this block. Therefore, you can now run........
-        db.reflect()
-        db.create_all()
+    padedown.init_app(app)
+    # with app.app_context():
+    #     # Extensions like Flask-SQLAlchemy now know what the "current" app
+    #     # is while within this block. Therefore, you can now run........
+    #     db.reflect()
+    #     db.create_all()
     
     login_manager.init_app(app)
     from app.main import main as main_blueprint

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf%}
+{% import "_macros.html" as macros %}
+
+{% block title %}Post{% endblock %}
+
+{% block body %}
+	{% include '_posts.html' %}
+	<div class="container">
+		<h4 id="comments">
+			Comments
+		</h4>
+	<ul class="comments">
+			{{ moment.include_jquery() }}
+			{{ moment.include_moment() }}
+			{% for comment in comments %}
+			<li class="comment">
+				<div class="profile-thumbnail">
+					<a href="{{ url_for('.user', username=comment.author.username) }}">
+						<img class="img-rounded profile-thumbnail" src="{{ comment.author.gravatar(size=20) }}">
+					</a>
+				</div>
+				<div class="comment-date float-right">{{ moment(comment.timestamp).fromNow() }}</div>
+				<div class="comment-author">
+					<a href="{{ url_for('.user', username=comment.author.username) }}">
+						{{ comment.author.username }}
+					</a>
+				</div>
+				<div class="comment-body">
+						{{ comment.body }}
+				</div>
+				<div class="comment-footer">
+					{% if current_user == comment.author %}
+					<a href="#">
+						<span class="label label-primary">Edit</span>
+					</a>
+					{% elif current_user.is_administrator() %}
+					<a href="#">
+						<span class="label label-danger">Edit [Admin]</span>
+					</a>
+					{% endif %}
+				</div>
+			</li>
+			{% endfor %}
+			<div class="pagination">
+				{{ macros.pagination_widget(pagination, '.post',id=post.id) }}
+			</div>
+	</ul>
+
+	<div>
+		{{ wtf.quick_form(form) }}
+	</div>
+	</div>
+{% endblock %}

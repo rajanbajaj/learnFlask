@@ -1,0 +1,28 @@
+.post, .comment{
+	border: solid;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 20px;
+    background: #310335;
+    color: white;
+}
+.comment{
+	background: #036569;
+}
+
+#comments{
+	padding: 10px;
+	margin: 5px;
+}
+
+.post a{
+    color:#ffc107; 	
+}
+
+.comment a{
+    color:#ffc107; 	
+}
+
+.post-form{
+	padding: 10px;
+}
